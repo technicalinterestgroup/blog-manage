@@ -97,7 +97,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 320,
+          width: 250,
           align: 'center',
           render: (h, params) => {
             const row = params.row
@@ -162,18 +162,18 @@ export default {
                     this.addOrUpdateHandle(params.row)
                   }
                 }
-              }, '编辑'),
-              h('iv-button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.remove(params.row)
-                  }
-                }
-              }, '删除')
+              }, '编辑')
+              // h('iv-button', {
+              //   props: {
+              //     type: 'error',
+              //     size: 'small'
+              //   },
+              //   on: {
+              //     click: () => {
+              //       this.remove(params.row)
+              //     }
+              //   }
+              // }, '删除')
             ])
           }
         }

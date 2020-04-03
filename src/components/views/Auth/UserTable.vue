@@ -24,7 +24,24 @@
     </div>
     <!-- 弹窗, 新增 / 修改 -->
     <br>
+      <Modal
+        v-model="modal1"
+        title="用户详情">
+        <p>用户名：{{info.userName}}</p>
+        <p>上传次数：{{info.uploadNum}} 次</p>
+        <p>剩余上传次数：{{info.over}} 次</p>
+    </Modal>
+
+     <Modal
+        @on-ok="ok(info.userName,uploadNum)"
+        v-model="modal2"
+        title="次数充值">
+        <p>用户名：{{info.userName}}</p>
+        <p>剩余上传次数：{{info.over}} 次</p>
+        <p>充值次数：<iv-input type="number" v-model="uploadNum" style="width:100px"></iv-input></p>
+    </Modal>
   </div>
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -43,6 +60,14 @@ export default {
         pageSize: 10
       },
       totalCount: 0,
+      modal1: false,
+      modal2: false,
+      info: {
+        userName: null,
+        uploadNum: 0,
+        over: 0
+      },
+      uploadNum: 0,
       columns7: [
         {
           title: '用户名',
@@ -62,11 +87,11 @@ export default {
           key: 'nickName',
           align: 'center'
         },
-        // {
-        //   title: '头像',
-        //   key: 'photo',
-        //   align: 'center'
-        // },
+        {
+          title: '上传次数',
+          key: 'uploadNum',
+          align: 'center'
+        },
         {
           title: '角色',
           key: 'roleName',
@@ -96,7 +121,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 150,
+          width: 200,
           align: 'center',
           render: (h, params) => {
             const row = params.row
@@ -122,12 +147,26 @@ export default {
                   type: 'dashed',
                   size: 'small'
                 },
+                style: {
+                  marginRight: '5px'
+                },
                 on: {
                   click: () => {
-                    this.remove(params.row)
+                    this.show(params.row)
                   }
                 }
-              }, '权限')
+              }, '详情'),
+              h('iv-button', {
+                props: {
+                  type: 'success',
+                  size: 'small'
+                },
+                on: {
+                  click: () => {
+                    this.show2(params.row)
+                  }
+                }
+              }, '充值')
             ])
           }
         }
@@ -162,7 +201,28 @@ export default {
       })
     },
     show (data) {
-      this.$router.push({name: 'blogDetail', params: {articleId: data.id}})
+      this.info = data
+      this.$axios.get('/admin/auth//user/uploadtime/' + data.userName)
+        .then(({data}) => {
+          if (data.code === '000000') {
+            this.info.over = data.data
+            this.modal1 = true
+          } else {
+            this.$Message.warning(data.msg)
+          }
+        })
+    },
+    show2 (data) {
+      this.info = data
+      this.$axios.get('/admin/auth//user/uploadtime/' + data.userName)
+        .then(({data}) => {
+          if (data.code === '000000') {
+            this.info.over = data.data
+            this.modal2 = true
+          } else {
+            this.$Message.warning(data.msg)
+          }
+        })
     },
     // 修改
     update (data) {
@@ -182,6 +242,23 @@ export default {
       // this.historyData = this.ajaxHistoryData.slice(_start, _end)
       this.pageParam.currentPage = index
       this.getUserList(null)
+    },
+    ok (userName, uploadNum) {
+      this.$axios.get('/admin/auth/user/addupload/' + userName, {
+        params: {
+          uploadNum: uploadNum
+        }
+      })
+        .then(({data}) => {
+          if (data.code === '000000') {
+            this.$Message.success('充值成功')
+            this.getUserList()
+          } else {
+            this.$Message.warning(data.msg)
+          }
+        })
+    },
+    cancel () {
     }
   }
 }
