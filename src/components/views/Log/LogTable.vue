@@ -60,7 +60,24 @@ export default {
         {
           title: '操作',
           key: 'operation',
-          align: 'center'
+          align: 'center',
+          render: (h, params) => {
+            return h('div', [
+              h('span', {
+                style: {
+                  display: 'inline-block',
+                  width: '100%',
+                  height: '15px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                },
+                domProps: {
+                  title: params.row.operation
+                }
+              }, params.row.operation)
+            ])
+          }
         },
         {
           title: 'ip',
@@ -97,7 +114,8 @@ export default {
         {
           title: '请求时间',
           key: 'createTime',
-          align: 'center'
+          align: 'center',
+          width: 170
         }
       ],
       data6: []

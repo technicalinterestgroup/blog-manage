@@ -99,6 +99,7 @@ export default {
           preview: true // 预览
         }
       },
+      articleId: this.$route.params.articleId,
       article: {
         carouselUrl: '../../../assets/upload.png',
         title: '',
@@ -129,7 +130,7 @@ export default {
     getArticle (articleId) {
       console.log('获取文章详情')
       // 获取文章详情
-      this.$axios.get('/admin/article/detail/' + articleId, {
+      this.$axios.get('/admin/website/notice/' + articleId, {
       }).then(({data}) => {
         if (data && data.code === '000000') {
           // this.categoryOptions = treeDataTranslate(data.categoryList)
@@ -153,6 +154,8 @@ export default {
         this.article.carouselUrl = response.data
         this.file = [response.resource]
         vm.$Message.success('上传成功！')
+      } else {
+        vm.$Message.success(response.msg)
       }
     },
     // 移除上传文件
@@ -171,15 +174,15 @@ export default {
           this.$axios.post('/admin/website/new', this.article)
             .then(({data}) => {
               if (data.code === '000000') {
-                // vm.$message.success('发布成功')
+                // vm.$Message.success('发布成功')
                 this.article = {}
                 this.$router.push({name: 'noticeDetail', params: {articleId: data.data}})
               } else {
-                vm.$message.warning(data.msg)
+                this.$Message.warning(data.msg)
               }
             })
         } else {
-          vm.$message.error('缺少必填项')
+          vm.$Message.error('缺少必填项')
           return false
         }
       })
@@ -194,27 +197,23 @@ export default {
             .then(({data}) => {
               if (data.code === '000000') {
                 this.article = {}
-                // vm.$message.success('发布成功')
+                // vm.$Message.success('发布成功')
                 this.$router.push({name: 'noticeDetail', params: {articleId: data.data}})
               } else {
-                vm.$message.error(data.msg)
+                vm.$Message.error(data.msg)
               }
             })
         } else {
-          vm.$message.error('缺少必填项')
+          vm.$Message.error('缺少必填项')
         }
       })
     },
     // 文章内容图片上传
     imgAdd (pos, $file) {
+      var vm = this
       // 第一步.将图片上传到服务器.
       let formData = new FormData()
       formData.append('file', $file)
-      // this.$http({
-      //   url: '/file/img/upload',
-      //   method: 'post',
-      //   data: formData,
-      //   headers: { 'Content-Type': 'multipart/form-data' }
       let config = {
         headers: {'Content-Type': 'multipart/form-data'}
       } // 添加请求头
@@ -223,7 +222,7 @@ export default {
           if (data.code === '000000') {
             this.$refs.md.$img2Url(pos, data.data)
           } else {
-            this.$message.warn(data.msg)
+            vm.$Message.error(data.msg)
           }
         })
     },

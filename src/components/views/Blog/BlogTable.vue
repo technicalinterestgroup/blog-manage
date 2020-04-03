@@ -56,7 +56,19 @@ export default {
           align: 'center',
           render: (h, params) => {
             return h('div', [
-              h('strong', params.row.title)
+              h('span', {
+                style: {
+                  display: 'inline-block',
+                  width: '100%',
+                  height: '15px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                },
+                domProps: {
+                  title: params.row.title
+                }
+              }, params.row.title)
             ])
           }
         },
