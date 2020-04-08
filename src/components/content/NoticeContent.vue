@@ -114,8 +114,8 @@ export default {
         })
       },
       getUserName(){
-        if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
-          var jsonObj = JSON.parse(localStorage.getItem('userInfo'))
+        if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
+          var jsonObj = JSON.parse(localStorage.getItem('adminInfo'))
           this.userName = jsonObj.userName
         }
       },

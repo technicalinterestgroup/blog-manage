@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     userIsLoginFunction () {
-      if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
       } else {
         this.$Message.warning('请先登录！')
         this.$router.replace({path: '/login'})
