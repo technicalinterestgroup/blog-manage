@@ -129,9 +129,9 @@ export default {
       }
     },
     userIsLoginFunction () {
-      if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
         console.log('已经登录')
-        var jsonObj = JSON.parse(localStorage.getItem('userInfo'))
+        var jsonObj = JSON.parse(localStorage.getItem('adminInfo'))
         this.userInfo = jsonObj
         this.userName = jsonObj.userName
         this.list = jsonObj.authList

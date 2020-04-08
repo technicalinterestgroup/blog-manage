@@ -47,7 +47,7 @@ export default {
           console.log(this.userToken)// 获取到的token
           _this.changeLogin({ accessToken: this.userToken,
             userInfo: this.userInfo })
-          if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+          if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
             this.loading()
             this.$router.replace({name: 'admin'})
           } else {

@@ -169,7 +169,7 @@ export default {
       }
     },
     userIsLoginFunction () {
-      if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
       }
     }
   }

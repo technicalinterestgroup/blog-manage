@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     // 存储token
     accessToken: localStorage.getItem('accessToken') ? localStorage.getItem('accessToken') : '',
-    userInfo: localStorage.getItem('userInfo') ? localStorage.getItem('userInfo') : ''
+    userInfo: localStorage.getItem('adminInfo') ? localStorage.getItem('adminInfo') : ''
   },
   /* actions: {
    changeLogin(ctx,Authorization){
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       state.accessToken = user.accessToken
       // console.log('store/index.js---到这里了!' + JSON.stringify(user))
       localStorage.setItem('accessToken', user.accessToken)
-      localStorage.setItem('userInfo', JSON.stringify(user.userInfo))
+      localStorage.setItem('adminInfo', JSON.stringify(user.userInfo))
     }
   }
 })

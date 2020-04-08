@@ -230,7 +230,7 @@ export default {
       this.article.contentFormat = marked(context)
     },
     userIsLoginFunction () {
-      if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
         this.token = localStorage.getItem('accessToken')
       } else {
         this.$Message.warning('请先登录！')

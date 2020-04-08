@@ -140,7 +140,7 @@ axios.interceptors.request.use(
     //   // console.log('不需要携带token的url' + config.url)
     } else {
       console.log('需要携带token的url')
-      if (localStorage.getItem('accessToken') && localStorage.getItem('userInfo')) {
+      if (localStorage.getItem('accessToken') && localStorage.getItem('adminInfo')) {
         config.headers.accessToken = localStorage.getItem('accessToken')
       }
     }
